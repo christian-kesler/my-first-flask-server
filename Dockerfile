@@ -1,14 +1,14 @@
-FROM ubuntu
+FROM python:3.7
+RUN pip install --upgrade pip
 
-RUN apt update
-
-RUN apt install python3-pip -y
-
-RUN pip3 install flask
+COPY ./requirements.txt /app/requirements.txt
 
 WORKDIR /app
 
-COPY . .
+RUN pip install -r requirements.txt
 
-CMD flask run -h 0.0.0.0 -p 5000
+COPY /app .
 
+EXPOSE 5000/tcp
+
+CMD ["flask", "run", "--host=0.0.0.0"]
